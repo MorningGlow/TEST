@@ -35,5 +35,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-test:4.3.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.3.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="Maven: cglib:cglib:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: asm:asm:3.3.1" level="project" />
   </component>
 </module>

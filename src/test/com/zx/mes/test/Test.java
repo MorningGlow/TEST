@@ -17,4 +17,8 @@ public class Test {
     public void test(){
         logger.info(JSON.toJSONStringWithDateFormat("测试","yyyy-MM-dd HH:mm:dd"));
     }
+    @org.junit.Test
+    public void test2(){
+
+    }
 }
