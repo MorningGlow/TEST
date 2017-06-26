@@ -1,9 +1,13 @@
 package com.zx.mes.test.proxy;
 
 import com.alibaba.fastjson.JSON;
+import com.zx.mes.proxy.CGProxy;
 import com.zx.mes.proxy.JKProxy;
 import com.zx.mes.proxy.dao.IDao;
 import com.zx.mes.proxy.dao.impl.DaoImpl;
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationHandler;
@@ -33,5 +37,35 @@ public class Test {
             }
         });
         dao.find("xxxx");
+    }
+
+    @org.junit.Test
+    public void test3(){
+        Enhancer enhancer=new Enhancer();
+        enhancer.setSuperclass(DaoImpl.class);
+        enhancer.setCallback(new CGProxy());
+
+        DaoImpl dao= (DaoImpl) enhancer.create();
+
+        dao.find("xx");
+
+    }
+
+
+    @org.junit.Test
+    public void test4(){
+        Enhancer enhancer=new Enhancer();
+        enhancer.setSuperclass(DaoImpl.class);
+        enhancer.setCallback(new MethodInterceptor() {
+            public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+                logger.info(JSON.toJSONStringWithDateFormat("方法执行前","yyyy-MM-dd HH:mm:ss"));
+                Object result=methodProxy.invokeSuper(o,objects);
+                logger.info(JSON.toJSONStringWithDateFormat("方法执行后,方法返回值:"+result,"yyyy-MM-dd HH:mm:ss"));
+                return null;
+            }
+        });
+
+        DaoImpl dao=(DaoImpl) enhancer.create();
+        dao.find(" xx");
     }
 }

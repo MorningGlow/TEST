@@ -16,6 +16,9 @@ public class CGProxy implements MethodInterceptor {
 
 
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+
+        Object result=methodProxy.invokeSuper(o,objects);
+
         return null;
     }
 }
