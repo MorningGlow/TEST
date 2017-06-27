@@ -2,12 +2,12 @@ package com.zx.mes.test.xml;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.Node;
+import org.dom4j.*;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
+import java.io.*;
 import java.util.Iterator;
 
 /**
@@ -53,9 +53,9 @@ public class Test {
             Element element2=element.element("display-name");
             logger.info(JSON.toJSONStringWithDateFormat(element2.getText(),"yyyy-MM-dd HH:mm:ss"));//根节点
             //获取属性值
-
+            String strValue=element.attributeValue("display-name");
             //获取属性
-
+            Attribute attr=element.attribute("display-name");
             //指定获取名称 **所有** 子标签  //如果无指定，那么就是所有子标签
             Iterator<Element> elements=element.elementIterator("welcome-file-list");
             while (elements.hasNext()){
@@ -64,5 +64,24 @@ public class Test {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void test3() throws DocumentException, IOException {
+        //只是样例，不做测试
+        //1、读取文件
+        Document doc = new SAXReader().read(new File("xxx.xml"));
+         //2、修改文件
+
+         //3、写出文件
+         FileOutputStream out = new FileOutputStream("f:/xxx.xml");//指定文件输出的位置
+         //指定写出的格式
+         OutputFormat format = OutputFormat.createCompactFormat(); //紧凑的格式.去除空格换行.
+         //OutputFormat format = OutputFormat.createPrettyPrint(); //格式好的格式.有空格和换行.
+         format.setEncoding("utf-8");//2.指定生成的xml文档的编码
+         XMLWriter writer = new XMLWriter(out,format);//创建写出对象
+         writer.write(doc);//写出对象
+         writer.close();//关闭流
+
     }
 }
