@@ -15,6 +15,7 @@ public class Test {
 
     @org.junit.Test
     public void test(){
+        //放在resources文件夹下面
         Properties prop=new Properties();
         InputStream in=Test.class.getClassLoader().getResourceAsStream("test.properties");
         try {
@@ -30,6 +31,7 @@ public class Test {
 
     @org.junit.Test
     public void test2(){
+        //绝对路径
         String path="C:\\Users\\Administrator.PC1138\\IdeaProjects\\TEST\\src\\main\\resources\\test.properties";
         try {
             InputStream in=new BufferedInputStream(new FileInputStream(path));
