@@ -1,12 +1,13 @@
 package com.zx.mes.reflect;
 
 import com.alibaba.fastjson.JSON;
+import com.zx.mes.proxy.dao.IDao;
 import org.apache.log4j.Logger;
 
 /**
  * Created by Administrator on 2017/6/28.
  */
-public class Person {
+public class Person implements IDao {
 
     private static final Logger logger=Logger.getLogger(Person.class);
 
@@ -63,5 +64,13 @@ public class Person {
 
     public void say(){
         logger.info(JSON.toJSONStringWithDateFormat("say","yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public void delete(String id) {
+
+    }
+
+    public String find(String id) {
+        return null;
     }
 }
