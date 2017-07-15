@@ -37,11 +37,11 @@ public class Test {
         Example example=new Example();
         Thread thread=new Thread(example);
         thread.start();
-        thread.sleep(3000);
+        Thread.sleep(3000);
         logger.info(JSON.toJSONStringWithDateFormat("中断线程...","yyyy-MM-dd HH:mm:ss"));
 
         example.stop=true;
-        thread.sleep(3000);
+        Thread.sleep(3000);
 
         logger.info(JSON.toJSONStringWithDateFormat("结束程序...","yyyy-MM-dd HH:mm:ss"));
 
@@ -52,13 +52,38 @@ public class Test {
         Example2 example=new Example2();
         Thread thread=new Thread(example);
         thread.start();
-        thread.sleep(3000);
+        Thread.sleep(3000);
         logger.info(JSON.toJSONStringWithDateFormat("中断线程...","yyyy-MM-dd HH:mm:ss"));
         //发出中断请求
         thread.interrupt();
-        thread.sleep(3000);
+        Thread.sleep(3000);
 
         logger.info(JSON.toJSONStringWithDateFormat("结束程序...","yyyy-MM-dd HH:mm:ss"));
+
+    }
+
+    @org.junit.Test
+    public void test6() throws InterruptedException {
+        Example3 example=new Example3();
+        Thread thread=new Thread(example);
+        thread.start();
+        Thread.sleep(3000);
+        logger.info(JSON.toJSONStringWithDateFormat("中断线程...","yyyy-MM-dd HH:mm:ss"));
+        thread.interrupt();//中断
+        Thread.sleep(3000);
+        logger.info(JSON.toJSONStringWithDateFormat("停止程序...","yyyy-MM-dd HH:mm:ss"));
+    }
+
+    //测试 join
+    //调用join的线程先执行，再执行其它的线程
+    //
+    @org.junit.Test
+    public void test7() throws InterruptedException {
+        Thread thread=new Thread(new Example4());
+        thread.start();
+        thread.join();
+        Mythread mythread2=new Mythread();
+        mythread2.start();
 
     }
 }
