@@ -86,4 +86,29 @@ public class Test {
         mythread2.start();
 
     }
+
+    //synchronized测试(失败)
+    @org.junit.Test
+    public void test8(){
+        Example5 example5=new Example5(new Object());
+        Thread thread=new Thread(example5);
+        Thread thread2=new Thread(example5);
+        thread.start();
+        thread2.start();
+
+    }
+
+    //synchronized测试(失败)
+    @org.junit.Test
+    public void test9() throws InterruptedException {
+        Object object=new Object();
+        Thread thread=new Thread(new Example5(object));
+        Thread thread2=new Thread(new Example5(object));
+
+        Thread.sleep(3000);
+
+        thread.start();
+        thread2.start();
+
+    }
 }
