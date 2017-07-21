@@ -3,6 +3,9 @@ package com.zx.mes.thread;
 import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * Created by Administrator on 2017/7/14.
  */
@@ -87,28 +90,81 @@ public class Test {
 
     }
 
-    //synchronized测试(失败)
+    ////synchronized测试(失败)
+    //@org.junit.Test
+    //public void test8(){
+    //    Example5 example5=new Example5(new Object());
+    //    Thread thread=new Thread(example5);
+    //    Thread thread2=new Thread(example5);
+    //    thread.start();
+    //    thread2.start();
+    //
+    //}
+    //
+    ////synchronized测试(失败)
+    //@org.junit.Test
+    //public void test9() throws InterruptedException {
+    //    Object object=new Object();
+    //    Thread thread=new Thread(new Example5(object));
+    //    Thread thread2=new Thread(new Example5(object));
+    //
+    //    Thread.sleep(3000);
+    //
+    //    thread.start();
+    //    thread2.start();
+    //
+    //}
     @org.junit.Test
     public void test8(){
-        Example5 example5=new Example5(new Object());
-        Thread thread=new Thread(example5);
-        Thread thread2=new Thread(example5);
+        final Mythread2 mythread2=new Mythread2();
+        mythread2.setNumber(20);
+
+        Thread thread=new Thread(new Runnable() {
+            public void run() {
+                mythread2.test();
+            }
+        });
+
+        Thread thread2=new Thread(new Runnable() {
+            public void run() {
+                mythread2.test2();
+            }
+        });
+
         thread.start();
         thread2.start();
-
     }
 
-    //synchronized测试(失败)
     @org.junit.Test
     public void test9() throws InterruptedException {
-        Object object=new Object();
-        Thread thread=new Thread(new Example5(object));
-        Thread thread2=new Thread(new Example5(object));
+        ExecutorService executorService= Executors.newCachedThreadPool();
 
-        Thread.sleep(3000);
+        executorService.execute(new Runnable() {
+            public void run() {
+                logger.info(JSON.toJSONStringWithDateFormat(Thread.currentThread().getName(),"yyyy-MM-dd HH:mm:ss"));
+            }
+        });
+        executorService.execute(new Runnable() {
+            public void run() {
+                logger.info(JSON.toJSONStringWithDateFormat(Thread.currentThread().getName(),"yyyy-MM-dd HH:mm:ss"));
+            }
+        });
+        executorService.execute(new Runnable() {
+            public void run() {
+                logger.info(JSON.toJSONStringWithDateFormat(Thread.currentThread().getName(),"yyyy-MM-dd HH:mm:ss"));
+            }
+        });
+        //在主线程终止前，让线程有足够的时间执行，不行没有效果
+        Thread.sleep(1000);
+    }
 
-        thread.start();
-        thread2.start();
-
+    @org.junit.Test
+    public void test10(){
+        ExecutorService executorService= Executors.newFixedThreadPool(2);
+        executorService.execute(new Runnable() {
+            public void run() {
+                //执行代码
+            }
+        });
     }
 }
