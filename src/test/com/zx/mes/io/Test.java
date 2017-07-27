@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/26.
- * 对文件File
+ * 对文件File  遍历文件的方法getDirectories
  * IO流进行测试
  */
 public class Test {
@@ -29,7 +29,7 @@ public class Test {
     }
 
     //遍历某个文件下所有的文件
-    //读取不到java 包里的面内容:什么鬼(原因是包名文件夹，不会被当作文件夹)
+    //遍历有问题
     @org.junit.Test
     public void test3() throws InterruptedException {
         //C:\\Users\\Administrator.PC1138\\IdeaProjects\\TEST\\src
@@ -69,7 +69,7 @@ public class Test {
         }
     }
 
-    //java工程建的包不能被file遍历到
+    //有问题
     @org.junit.Test
     public void test5(){
         File file=new File("C:\\Users\\Administrator.PC1138\\IdeaProjects\\TEST\\java");
@@ -87,6 +87,38 @@ public class Test {
         }
     }
 
+    //对遍历文件进行优化(解决找不到java包里面文件)
+    @org.junit.Test
+    public void test6(){
+        File file=new File("C:\\Users\\Administrator.PC1138\\IdeaProjects\\TEST");
+        getDirectories(file);
+    }
+
+    public List<String> getDirectories(File file){
+        List<String> list=null;
+
+        File[] flist=file.listFiles();
+        if (flist==null || flist.length==0) {
+            return list;
+        }else{
+            list=new ArrayList<String>();
+        }
+
+        for (int i=0;i<flist.length;i++) {
+            if (flist[i].isDirectory()) {
+                //所有的文件夹
+                logger.info(JSON.toJSONStringWithDateFormat(flist[i].getAbsolutePath(),"yyyy-MM-dd HH:mm:ss"));
+                list.add(flist[i].getAbsolutePath());
+                getDirectories(flist[i]);
+            }else {
+                //所有的文件
+                logger.info(JSON.toJSONStringWithDateFormat(flist[i].getAbsolutePath(),"yyyy-MM-dd HH:mm:ss"));
+                list.add(flist[i].getAbsolutePath());
+            }
+        }
+
+        return list;
+    }
 
     public List<String> getFiles(File file){
 
