@@ -2,7 +2,8 @@ package com.zx.mes.io;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
-import org.junit.*;
+
+import org.junit.Test;
 
 
 import java.io.*;
@@ -78,6 +79,25 @@ public class TestIO {
         bin.close();
         bout.flush();
         bout.close();
+    }
+
+    //字符读写
+    @Test
+    public void test4() throws IOException {
+
+        BufferedReader br=new BufferedReader(new FileReader("C:\\Users\\Administrator" +
+                ".PC1138\\IdeaProjects\\TEST\\src\\main\\java\\com\\zx\\mes\\proxy\\JKProxy.java"));
+        BufferedWriter bw=new BufferedWriter(new FileWriter("C:/Users/Administrator.PC1138/Desktop/java.txt"));
+
+        String temp;
+        while ((temp=br.readLine()) !=null) {
+            logger.info(JSON.toJSONStringWithDateFormat(temp,"yyyy-MM-dd HH:mm:ss"));
+            bw.write(temp);
+        }
+
+        br.close();
+        bw.flush();
+        bw.close();
     }
 }
 

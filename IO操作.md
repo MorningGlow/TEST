@@ -10,7 +10,7 @@
 
 ![图片](imgs/io.PNG)
 
-### 缓存读写
+### 缓存字节流读写
 ```java
 @org.junit.Test
 public void test3() throws IOException {
@@ -34,6 +34,28 @@ public void test3() throws IOException {
     bin.close();
     bout.flush();
     bout.close();
+}
+```
+
+### 缓存字符读写
+```java
+//字符读写
+@Test
+public void test4() throws IOException {
+
+    BufferedReader br=new BufferedReader(new FileReader("C:\\Users\\Administrator" +
+            ".PC1138\\IdeaProjects\\TEST\\src\\main\\java\\com\\zx\\mes\\proxy\\JKProxy.java"));
+    BufferedWriter bw=new BufferedWriter(new FileWriter("C:/Users/Administrator.PC1138/Desktop/java.txt"));
+
+    String temp;
+    while ((temp=br.readLine()) !=null) {
+        logger.info(JSON.toJSONStringWithDateFormat(temp,"yyyy-MM-dd HH:mm:ss"));
+        bw.write(temp);
+    }
+
+    br.close();
+    bw.flush();
+    bw.close();
 }
 ```
 
